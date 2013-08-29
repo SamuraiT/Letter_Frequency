@@ -1,4 +1,7 @@
 #frequency of a letter
+import string
+
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
 def most_frequent(st):
 	"""
@@ -6,11 +9,12 @@ def most_frequent(st):
 	st:a string you will examine each letter frequency 
 	return list of tuple(freq,letter)
 	"""
-	d = dict()
+	alpha = zip(alphabet,[0]*26)
+	d = dict(alpha)
 	t = []
 	count = 0.0
 	for letter in st:
-		if letter in string.punctuation or letter in ' ': continue
+		if letter not in alphabet: continue
 		d[letter] = d.setdefault(letter,0)+1
 		count += 1
 	for letter,freq in d.items():
@@ -18,7 +22,7 @@ def most_frequent(st):
 	t.sort(reverse = True)
 	return t
 
-def most_frequent_fromfile(filename ='sample_story.txt'):
+def most_frequent_fromfile(filename ='sample.txt'):
 	"""
 	examine frequency of each letter of the file you pass
 	this func only allows an alphabet letter
@@ -27,13 +31,14 @@ def most_frequent_fromfile(filename ='sample_story.txt'):
 	return list of tuple(freq,letter)
 	"""
 	fin = open(filename)
-	d = dict()
+	alpha = zip(alphabet,[0]*26)
+	d = dict(alpha)
 	t = []
 	count = 0.0
 	for line in fin:
 		line = line.strip().lower()
 		for letter in line:
-			if not letter in 'abcdefghijklmnopqrstuvwxyz':continue
+			if letter not in alphabet :continue
 			d[letter] = d.setdefault(letter,0)+1
 			count += 1
 	for letter,freq in d.items():
@@ -58,19 +63,46 @@ def make_frequency_list(filename = 'frequency_of_letter.txt'):
 		t.append( tuple( line.split() ) )
 	return t
 
-def compare(sample,stats):
+def compare_list(sample,stats):
 	"""
 	compare the each frequency of letter from sample you'd like to examine
 	and stats( statistic data) 
 	and print the result in descending order
 	"""
-	if not len(sample) == len(stats):raise TypeError,'the length of sample and stats are different'
+	#if not len(sample) >= len(stats):raise TypeError,'the length of sample and stats are different'
 	for i in range( len(sample) ):
-		print sample[i][1],'%0.2f' % sample[i][0],stats[i][0],stats[i][1]
+		print sample[i][1],'%0.2f' % sample[i][0],stats[i][0],stats[i][1],(' <- bingo' if sample[i][1] == stats[i][0] else '')
+
+def compare(sample_file,stats_file = 'frequency_of_letter.txt'):
+	"""comare the letter frequency of the sample_file with 
+	stats_file.
+	then print them in descending order
+	"""
+	stats = make_frequency_list(stats_file)
+	sample = most_frequent_fromfile(sample_file)
+	compare_list(sample,stats)
+
+def compare_string(message,stats_file = 'frequency_of_letter.txt'):
+	"""
+	compare the letter frequency of the message with 
+	stats_file.
+	then print them in descending order
+	"""
+	stats = make_frequency_list(stats_file)
+	sample = most_frequent(message)
+	compare_list(sample,stats)
+
 
 		
 if __name__ == '__main__':
 	sample = most_frequent_fromfile()
 	stats = make_frequency_list()
-	compare(sample,stats)
+	compare_list(sample,stats)
+	print
+	sample_file = 'sample.txt'
+	compare( sample_file )
+	print 
+	message = 'hello, thank you for trying to run this module. if you have a problem, suggestion, comment,or question,feel free to ask me ! thank you'
+	compare_string(message)
+
 	
