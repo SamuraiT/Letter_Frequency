@@ -27,7 +27,7 @@ if you'd like to pass a string, do this:
     compare_string(message)
 
   
-result will be like this:
+the results will be like this:
 
     o 12.50 e 12.51 
     e 11.54 t 9.25 
