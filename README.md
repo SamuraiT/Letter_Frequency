@@ -19,7 +19,7 @@ should be a string you'd like to examine.
 There are also other available modules. 
 
 Example
-----------------------------
+=======================
 if you'd like to pass a string, do this:
 
     from letter_frequency import compare_string
@@ -55,7 +55,10 @@ the results will be like this:
     x 0.00 j 0.16 
     w 0.00 q 0.11 
     j 0.00 z 0.09 
-  
+
+example 2
+----------------------
+
 If you have a file and you'd like to examine, do this:
 
     from letter_frequency import compare
